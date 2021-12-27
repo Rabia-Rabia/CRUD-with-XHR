@@ -7,118 +7,191 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>XMLHttpsRequest</title>
 </head>
 
 <body>
-
-
     <div class="container">
         <div id="posts" class="row gy-4">
-
-
-            
             <form class="col-md-12 pt-4 d-flex flex-column">
-
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
-                      <h2 class="accordion-header" id="headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                          Make a post
-                        </button>
-                      </h2>
-                      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                        <div class="accordion-body d-flex flex-column">
-                            <input id="postTitle" type="text" class="mb-5" >
-                            <textarea id="postDesc" cols="30" rows="10"></textarea>
-                            <button id="post" class="btn btn-block btn-secondary btn-lg mt-3">Post</button>
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Make A Post
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body d-flex flex-column">
+                                <input id="postTitle" type="text" class="mb-5">
+                                <textarea id="postDesc" cols="30" rows="10"></textarea>
+                                <button id="post" class="btn btn-block btn-secondary btn-lg mt-3">Post</button>
+                            </div>
                         </div>
-                      </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                Delete A Post
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body d-flex flex-column">
+                                <select id="selectToDelete" class="form-select">
+                                    <option selected>Open this select menu</option>
+                                  </select>
+                                <button id="postDelete" class="btn btn-block btn-danger btn-lg mt-3">Delete</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
-               
             </form>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
     <script>
+        //  create element by DOM manipulation
+        function postbody(postTitle, postDescription, postId) {
+            
+            // create grid
+            const postbody = document.createElement('div');
+            postbody.classList.add('col-md-3');
+            postbody.setAttribute('id', 'postId' + postId); // postId10
 
-        function postBody(postTitle, postDescription){
-            const postBody = document.createElement('div');
-            postBody.classList.add('col-md-3');
-
+            // create card
             const card = document.createElement('div');
             card.classList.add('card');
             card.setAttribute('style', 'width: 18rem;');
 
-            postBody.appendChild(card);
+            // Append card to grid
+            postbody.appendChild(card);
 
-            const cardBody = document.createElement('div');
-            cardBody.classList.add('card-body');    
-            card.appendChild(cardBody);
+            // create cardbody
+            const cardbody = document.createElement('div');
+            cardbody.classList.add('card-body');
 
+            // Append cardbody to card
+            card.appendChild(cardbody);
+
+            // create card title
             const title = document.createElement('h5');
             title.classList.add('card-title');
             title.innerText = postTitle;
-            cardBody.appendChild(title);
 
+            // append card title to cardbody
+            cardbody.appendChild(title);
+
+            // create card text
             const desc = document.createElement('p');
             desc.classList.add('card-text');
-            cardBody.appendChild(desc);
-            desc.innerText = postDescription
-            document.querySelector('#posts').appendChild(postBody);
+
+            // append description to card text
+            cardbody.appendChild(desc);
+            desc.innerText = postDescription;
+
+            // append post to postbody
+            document.querySelector('#posts').appendChild(postbody);
         }
 
-        function XHRequest(verb, endpoint, data){
+            // create option
+            function getPostList(postTitle, postId){
+                const options = document.createElement('option');
+                options.setAttribute('value', postId);
+                options.innerText(postId+'.'+postTitle);
+            }
+
+        // XML Https request
+        function XHRequest(verb, endpoint, data) {
+
+            //  initialize XML Http Request
             const xhr = new XMLHttpRequest();
+
+            //  get request data type
             xhr.responseType = 'json';
+
             xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200 && verb === 'get') {
-                    xhr.response.map(el => {
-                        postBody(el.title, el.description);
-                    });
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    switch(verb){
+                        case 'get':
+                        xhr.response.map(el => {
+                              //  get all post in document
+                            postbody(el.title, el.description, el.id);
+                            //  get post list in accordion delete button
+                            getPostList(el.id, el.title)
+                        });
+                        break;
+                    }
+
                 }
+                if (xhr.readyState === 4 && xhr.status === 201){
+                    postbody(xhr.response.title, xhr.response.description, xhr.response.id);
+                }
+
             }
             xhr.open(verb, endpoint, true);
-
-
-            if ( verb === 'get' ){
-                xhr.send();
-            } else if(verb === 'post') {
-                xhr.setRequestHeader('Content-Type','application/json');
-                xhr.send(JSON.stringify(data));
-            }
-            
+                switch(verb){
+                    case 'get':
+                    xhr.send();
+                    break;
+                    case 'post':
+                    xhr.setRequestHeader('content-type', 'application/json');xhr.send(JSON.stringify(data));
+                    break;
+                    case 'delete':
+                    xhr.send();
+                    break;
+                }
         }
-        
-        document.getElementById('post').addEventListener('click', function(e){
+
+        // create request
+        document.getElementById('post').addEventListener('click', function (e) {
             e.preventDefault();
+
+            //  get form data
             const blogTitle = document.querySelector('#postTitle').value;
             const blogDesc = document.querySelector('#postDesc').value;
-
-
             const data = {
-                    "title": blogTitle,
-                    "description": blogDesc
-                };
-            XHRequest('post', 'http://localhost:3000/posts', data);
-            postBody(blogTitle, blogDesc);
-            document.querySelector('#postTitle').value = '';
-            document.querySelector('#postDesc').value = '';
+                "title": blogTitle,
+                "description": blogDesc
+            };
+            XHRequest('post', 'http://localhost:3000/posts/', data);
+            postbody(blogTitle, blogDesc);
+
+            //  make the form empty after request post
+            document.querySelector('#postTitle').value = "";
+            document.querySelector('#postDesc').value = "";
+
         });
 
+        // Podt delete
+        document.getElementById('postDelete').addEventListener('click', function (e) {
+            e.preventDefault();
 
+            // get selected option value
+            const selectedPost = document.querySelector('#selectToDelete').value;
 
+            // Send delete request
+            XHRequest('delete', 'http://localhost:3000/posts/' + selectedPost);
+
+            // remove post from grid and remove option tag from delete section
+            document.querySelector('#postId' + selectedPost).remove();
+            document.querySelector('#selectToDelete > option[value="' + selectedPost+'"]').remove();
+
+        });
+
+        //  get post at the time of page loading
         function getPosts() {
-            XHRequest('get', 'http://localhost:3000/posts');
+            XHRequest('get', 'http://localhost:3000/posts/');
         }
 
-        window.onload = function(){
+        window.onload = function () {
             getPosts();
         }
 

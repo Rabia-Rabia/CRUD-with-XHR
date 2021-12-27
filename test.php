@@ -1,4 +1,3 @@
-<?php 
-
-$name = 'I am Habib';
+<?php
+$name = 'i am rabia';
 echo $name;

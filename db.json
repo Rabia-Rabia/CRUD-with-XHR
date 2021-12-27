@@ -2,28 +2,23 @@
   "posts": [
     {
       "id": 1,
-      "title": "Hello world",
-      "description": "Hello desc"
+      "title": "Dynamic Tactics Assistant",
+      "description": "Dolor odio nemo ullam. Incidunt minima voluptatem."
     },
     {
-      "title": "this is test post title",
-      "description": "this is test post description",
-      "id": 2
+      "id": 2,
+      "title": "Legacy Markets Executive",
+      "description": "Ut neque quasi illum voluptatem laudantium."
     },
     {
-      "title": "hi",
-      "description": "hello",
-      "id": 3
+      "id": 3,
+      "title": "Lead Tactics Designer",
+      "description": "Enim aliquid aut atque voluptatum."
     },
     {
-      "title": "hi",
-      "description": "hello",
-      "id": 4
-    },
-    {
-      "title": "hello rabia",
-      "description": "I am not rabia",
-      "id": 5
+      "id": 6,
+      "title": "Principal Marketing Analyst",
+      "description": "consequatur"
     }
   ]
 }
